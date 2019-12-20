@@ -28,6 +28,14 @@ export function GetAllNotes() : Promise<Config> {
     return Promise.resolve(json);
 }
 
+export function GetNote(id: string) : Promise<Note> {
+    return new Promise((resolve, reject) => {
+        const item = json.notes.find((e) => e.id === id);
+        if (!item) return reject("no match");
+        resolve(item);
+    });
+}
+
 export function AddNote(note: Note) : Promise<Config> {
     return new Promise((resolve, reject) => {
         note.created_at = note.updated_at = new Date();       
