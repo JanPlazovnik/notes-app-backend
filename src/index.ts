@@ -20,6 +20,13 @@ notes.get('/', (req: express.Request, res: express.Response) => {  // Retrieve a
         .then((data) => res.status(200).json(data));
 });
 
+notes.get('/:id', (req: express.Request, res: express.Response) => {  // Retrieve all the notes stored in json.
+    const id = req.params.id;
+    funcs.GetNote(id)
+        .then((data) => res.status(200).json(data))
+        .catch((err) => res.status(500).json(err));    
+});
+
 notes.post('/', (req: express.Request, res: express.Response) => { // Store a note in JSON.
     if(!funcs.IsValidColor(req.body.background)) 
         return res.status(422).json({err: 'The background is not in a valid color format.'});
@@ -38,6 +45,10 @@ notes.put('/:id', (req: express.Request, res: express.Response) => { // Edit a s
     funcs.UpdateNote(id, req.body as Note)
         .then((data) => res.status(200).json(data))
         .catch((err) => res.status(500).json(err))
+});
+
+notes.put('/all', (req: express.Request, res: express.Response) => { // Update notes in bulk.
+
 });
 
 notes.delete('/:id', (req: express.Request, res: express.Response) => { // Remove a specific Note.
